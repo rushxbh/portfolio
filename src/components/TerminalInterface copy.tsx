@@ -1,19 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import Projects from './components/Projects';
+import Experience from './components/Experience';
+import Skills from './components/Skills';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
 import TerminalInterface from './components/TerminalInterface';
+import { useKonamiCode } from './hooks/useKonamiCode';
 import PortfolioBootSequence from './components/Blue';
-import './index.css';
-
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const appRef = useRef(null);
   const [showBootSequence, setShowBootSequence] = useState(true);
+  const { isActivated: isTerminalActive, deactivate: deactivateTerminal } = useKonamiCode();
 
   const handleBootComplete = () => {
-    console.log('Boot sequence completed, switching to terminal');
     setShowBootSequence(false);
   };
 
@@ -22,10 +28,23 @@ function App() {
     console.log(`
     ╔═══════════════════════════════════════════════════╗
     ║  🚀 Welcome to Rushist's Portfolio Console!      ║
+    ║  Type 'portfolio.secrets()' for hidden features  ║
+    ║  🎮 Try the Konami Code: ↑↑↓↓←→←→BA              ║
     ╚═══════════════════════════════════════════════════╝
     `);
     
     (window as any).portfolio = {
+      secrets: () => {
+        console.log('🎮 Konami Code: ↑↑↓↓←→←→BA - Try it!');
+        
+        
+        
+        console.log('🎯 Easter Eggs: Multiple hidden features throughout');
+      },
+      terminal: () => {
+        console.log('🖥️ Terminal mode can be activated with the Konami Code!');
+        console.log('Commands available: help, ls, cat, skills, contact, whoami');
+      },
       skipBoot: () => {
         setShowBootSequence(false);
         console.log('🚀 Boot sequence skipped!');
@@ -55,20 +74,25 @@ function App() {
         <PortfolioBootSequence onBootComplete={handleBootComplete} />
       )}
       
-      {/* Terminal Interface - Shows after boot sequence */}
+      {/* Terminal Interface Overlay */}
       {!showBootSequence && (
-        <>
-          <div style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 9999, color: 'red' }}>
-            DEBUG: Terminal should be visible now
-          </div>
-          <TerminalInterface 
-            isActive={true} 
-            onClose={() => console.log('Terminal close attempted')} 
-          />
-        </>
+        <TerminalInterface 
+          isActive={!isTerminalActive} 
+          onClose={deactivateTerminal} 
+        />
+      )}
+      
+      {/* Main Portfolio Content */}
+      {!showBootSequence && (
+        <div className={isTerminalActive ? 'hidden' : 'block'}>
+          
+          
+        </div>
       )}
     </div>
   );
 }
 
 export default App;
+
+

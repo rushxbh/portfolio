@@ -3,9 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import ASCIIText from './ascii.tsx';
 import SplashCursor from './splash.tsx';
-import GradientText from'./gradtext.tsx';
-
-
+import Dither from './dither.tsx';
 
 const PortfolioBootSequence = ({ setCurrentScene, onBootComplete }) => {
   const [scene, setScene] = useState(0);
@@ -24,26 +22,7 @@ const PortfolioBootSequence = ({ setCurrentScene, onBootComplete }) => {
   // Audio context for beeps and sounds
   const audioContext = useRef(null);
   
-  const playBeep = (frequency = 800, duration = 100) => {
-    if (!audioContext.current) {
-      audioContext.current = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    
-    const oscillator = audioContext.current.createOscillator();
-    const gainNode = audioContext.current.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.current.destination);
-    
-    oscillator.frequency.value = frequency;
-    oscillator.type = 'square';
-    
-    gainNode.gain.setValueAtTime(0.1, audioContext.current.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.current.currentTime + duration / 1000);
-    
-    oscillator.start(audioContext.current.currentTime);
-    oscillator.stop(audioContext.current.currentTime + duration / 1000);
-  };
+  
 
   const skipAnimation = () => {
     setIsSkipped(true);
@@ -83,7 +62,7 @@ const PortfolioBootSequence = ({ setCurrentScene, onBootComplete }) => {
         });
       }
       
-      playBeep(400, 200);
+      
       
       setTimeout(() => setScene(1), 3500);
     }, 100);
@@ -95,7 +74,7 @@ const PortfolioBootSequence = ({ setCurrentScene, onBootComplete }) => {
   useEffect(() => {
     if (scene !== 1 || isSkipped) return;
     
-    playBeep(600, 150);
+   
     
     const timer = setTimeout(() => {
       if (progressBarRef.current) {
@@ -111,87 +90,25 @@ const PortfolioBootSequence = ({ setCurrentScene, onBootComplete }) => {
     return () => clearTimeout(timer);
   }, [scene, isSkipped]);
 
-  // Scene 3: BIOS Password
+  // Scene 3: Loading Portfolio - THIS WAS MISSING THE COMPLETION LOGIC
   useEffect(() => {
     if (scene !== 2 || isSkipped) return;
     
-    // Cursor blinking
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
     
-    // Auto-fill password after 1.5s
+    
+    // Auto-complete the loading after 3 seconds
     const timer = setTimeout(() => {
-      let index = 0;
-      const name = "Rushist";
-      const typeInterval = setInterval(() => {
-        if (index < name.length) {
-          setPasswordInput(prev => prev + name[index]);
-          playBeep(800, 50);
-          index++;
-        } else {
-          clearInterval(typeInterval);
-          // Press Enter after typing
-          setTimeout(() => {
-            playBeep(1000, 100);
-            if (glitchRef.current) {
-              gsap.to(glitchRef.current, {
-                duration: 0.1,
-                opacity: 0.8,
-                repeat: 1,
-                yoyo: true
-              });
-            }
-            setTimeout(() => setScene(3), 1500);
-          }, 500);
+      
+      
+      // Complete the boot sequence
+      setTimeout(() => {
+        if (onBootComplete) {
+          onBootComplete();
         }
-      }, 200);
-    }, 1500);
+      }, 1000);
+    }, 3000);
     
-    return () => {
-      clearInterval(cursorInterval);
-      clearTimeout(timer);
-    };
-  }, [scene, isSkipped]);
-
-  // Scene 4: Welcome
-  useEffect(() => {
-    if (scene !== 3 || isSkipped) return;
-    
-    if (welcomeTextRef.current) {
-      gsap.fromTo(welcomeTextRef.current,
-        { opacity: 0 },
-        { 
-          opacity: 1, 
-          duration: 0.5,
-          onComplete: () => {
-            // Type out welcome message with beeps
-            const text = "Welcome back, Rushist.";
-            let index = 0;
-            const typeInterval = setInterval(() => {
-              if (index < text.length) {
-                playBeep(900, 80);
-                index++;
-              } else {
-                clearInterval(typeInterval);
-                // Hold for 2s then complete boot sequence
-                setTimeout(() => {
-                  gsap.to(welcomeTextRef.current, {
-                    opacity: 0,
-                    duration: 0.5,
-                    onComplete: () => {
-                      if (onBootComplete) {
-                        onBootComplete();
-                      }
-                    }
-                  });
-                }, 2000);
-              }
-            }, 100);
-          }
-        }
-      );
-    }
+    return () => clearTimeout(timer);
   }, [scene, isSkipped, onBootComplete]);
 
   // Handle ESC key and clicks to skip
@@ -217,8 +134,8 @@ const PortfolioBootSequence = ({ setCurrentScene, onBootComplete }) => {
     };
   }, [scene]);
 
-  // Don't render if skipped or boot complete
-  if (isSkipped && onBootComplete) {
+  // Don't render if skipped
+  if (isSkipped) {
     return null;
   }
 
@@ -277,29 +194,41 @@ const PortfolioBootSequence = ({ setCurrentScene, onBootComplete }) => {
             </div>
           </div>
           <SplashCursor/>
-          
         </div>
       )}
       
-      {/* Scene 2: BIOS Password */}
-
-
-      
-      {/* Scene 3: Welcome */}
+      {/* Scene 2: Loading Portfolio */}
       {scene === 2 && (
-        <div className="flex items-center justify-center min-h-screen bg-black">
-          <GradientText
-  colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-  animationSpeed={3}
-  showBorder={false}
-  className="custom-class"
->
-  Loading Portfolio...
-</GradientText>
-         <SplashCursor/>
-          
-        </div>
-      )}
+  <div className="relative flex items-center justify-center min-h-screen bg-black">
+    {/* Background Layer (z-index: -1) */}
+    <div style={{ 
+      position: 'relative',
+      width: '100%',
+      height: '1000px',
+      
+    }}>
+      <Dither
+        waveColor={[0, 0.5, 0]}
+        disableAnimation={false}
+        enableMouseInteraction={true}
+        mouseRadius={0.3}
+        colorNum={4}
+        waveAmplitude={0.3}
+        waveFrequency={3}
+        waveSpeed={0.05}
+      />
+    </div>
+
+    {/* Content Layer (z-index: 50) */}
+    <div className="absolute inset-0 flex w-[500px] items-center justify-center z-50">
+      <ASCIIText
+        text='Loading Portfolio...'
+        enableWaves={false}
+        asciiFontSize={5}
+      />
+    </div>
+  </div>
+)}
     </div>
   );
 };
