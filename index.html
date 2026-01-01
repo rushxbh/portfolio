@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUSHABH JAIN // PORTFOLIO</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/@phosphor-icons/web@2.0.3"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.29/dist/lenis.min.js"></script>
+
+    <style>
+        :root {
+            /* Light Mode Defaults */
+            --bg: #f2f2f2;
+            --text: #121212;
+            --accent: #ff4d00;
+            --card-bg: #ffffff;
+            --border: rgba(0, 0, 0, 0.08);
+            --grid-color: rgba(0, 0, 0, 0.04);
+            --nav-glass: rgba(255, 255, 255, 0.8);
+            --pill-bg: rgba(0, 0, 0, 0.05);
+            --serif-color: #ff4d00;
+            --gradient-accent: rgba(255, 77, 0, 0.05);
+        }
+
+        /* Dark Mode Overrides */
+        html[data-theme="dark"] {
+            --bg: #050505;
+            --text: #e0e0e0;
+            --accent: #00f0ff;
+            --card-bg: #121212;
+            --border: rgba(255, 255, 255, 0.12);
+            --grid-color: rgba(255, 255, 255, 0.05);
+            --nav-glass: rgba(5, 5, 5, 0.8);
+            --pill-bg: rgba(255, 255, 255, 0.1);
+            --serif-color: #00f0ff;
+            --gradient-accent: rgba(0, 240, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- BACKGROUND --- */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200vw;
+            height: 200vh;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            transition: background-image 0.4s ease;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px);
+            }
+        }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 4vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: var(--nav-glass);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+
+        .logo {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            background: var(--serif-color);
+            color: var(--bg);
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .contact-btn i {
+            font-size: 1rem;
+        }
+
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: var(--card-bg);
+            color: var(--text);
+            transition: transform 0.2s, background-color 0.4s, border-color 0.4s, color 0.4s;
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.9);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4vw;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 11vw;
+            line-height: 0.85;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            position: relative;
+            z-index: 10;
+            text-transform: uppercase;
+            margin: 0;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .serif {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--serif-color);
+            transition: color 0.4s ease;
+        }
+
+        .serif-1 {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-weight: 400;
+            transition: color 0.4s ease;
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            margin-top: 2rem;
+            opacity: 0.6;
+            max-width: 500px;
+            line-height: 1.5;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        /* --- BENTO --- */
+        .bento-wrapper {
+            padding: 5vh 4vw;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            opacity: 0.5;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: 1.5rem;
+        }
+
+        .bento-item {
+            background: var(--card-bg);
+
+            border-radius: 0px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s, border-color 0.4s;
+            color: var(--text);
+        }
+
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bento-gradient {
+            background: linear-gradient(135deg, var(--gradient-accent) 0%, transparent 60%);
+        }
+
+        .col-span-1 {
+            grid-column: span 1;
+        }
+
+        .col-span-2 {
+            grid-column: span 2;
+        }
+
+        .col-span-3 {
+            grid-column: span 3;
+        }
+
+        .col-span-4 {
+            grid-column: span 4;
+        }
+
+        .row-span-2 {
+            grid-row: span 2;
+        }
+
+        .bento-header {
+            font-size: 0.8rem;
+            opacity: 0.6;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .bento-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .bento-title-1 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+            color: var(--serif-color);
+            transition: color 0.4s ease;
+        }
+
+        .bento-sub {
+            font-size: 1rem;
+            opacity: 0.8;
+            line-height: 1.4;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .pill {
+            font-size: 0.75rem;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            background: var(--pill-bg);
+            color: var(--text);
+            transition: background-color 0.4s, border-color 0.4s, color 0.4s;
+        }
+
+        /* --- HORIZONTAL SCROLL PROJECTS --- */
+        .projects-wrapper {
+            padding: 10vh 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .projects-wrapper::before,
+        .projects-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            z-index: 10;
+            pointer-events: none;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .projects-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, black 0%, transparent 100%);
+            mask-image: linear-gradient(to right, black 0%, transparent 100%);
+        }
+
+        .projects-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to left, black 0%, transparent 100%);
+            mask-image: linear-gradient(to left, black 0%, transparent 100%);
+        }
+
+        .projects-wrapper .section-title {
+            padding: 0 4vw;
+            margin-bottom: 2rem;
+        }
+
+        .projects-scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 0 4vw 1rem 4vw;
+            gap: 1.5rem;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE/Edge */
+        }
+
+        .projects-scroll-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome/Safari */
+        }
+
+        .flip-card {
+            flex-shrink: 0;
+            width: 350px;
+            height: 400px;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s ease;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border: 1px solid var(--border);
+        }
+
+        /* FRONT: Clean card with title */
+        .flip-card-front {
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .flip-card-front .project-number {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.5;
+            margin-bottom: 1rem;
+        }
+
+        .flip-card-front .project-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--serif-color);
+            letter-spacing: -0.04em;
+
+        }
+
+        /* BACK: Image with content */
+        .flip-card-back {
+            transform: rotateY(180deg);
+            overflow: hidden;
+        }
+
+        .flip-card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .flip-card-back .project-bento-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 60%, transparent 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .flip-card-back .bento-header,
+        .flip-card-back .bento-title {
+            color: #fff;
+        }
+
+        .flip-card-back .bento-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flip-card-back .project-bento-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin: 0.75rem 0;
+        }
+
+        .flip-card-back .tag-container {
+            margin-top: 0.5rem;
+        }
+
+        .flip-card-back .pill {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .flip-card-back .project-link-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flip-card {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-bento {
+                height: 350px;
+            }
+        }
+
+        .github-btn {
+            margin-top: 2rem;
+            align-self: flex-start;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--text);
+            color: var(--bg);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: opacity 0.2s, background-color 0.4s, color 0.4s;
+        }
+
+        .github-btn:hover {
+            opacity: 0.8;
+        }
+
+        .year-display {
+            font-size: 3.5rem;
+            font-family: 'Instrument Serif', serif;
+            color: var(--accent);
+            line-height: 1;
+            transition: color 0.4s ease;
+        }
+
+        .footer {
+            height: 20vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+            font-size: 0.8rem;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .edu-info {
+            margin-top: 1rem;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 14vw;
+            }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .col-span-1,
+            .col-span-2,
+            .col-span-3,
+            .col-span-4 {
+                grid-column: span 1;
+            }
+
+            .project-card {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .p-img,
+            .p-content {
+                width: 100%;
+            }
+
+            .p-img {
+                height: 250px;
+            }
+
+            .p-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-grid"></div>
+
+    <nav>
+        <div class="logo">Rushabh Jain</div>
+        <div class="nav-right">
+            <a href="mailto:rushabhjain@email.com" class="contact-btn">
+                <i class="ph ph-envelope"></i> Contact
+            </a>
+            <div class="theme-toggle" id="themeBtn">
+                <i class="ph ph-moon" id="themeIcon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="bento-header" style="margin-left: 5px;">Portfolio 2026</div>
+        <h1>Rushabh <span class="serif-1">Jain</span></h1>
+        <h1>Kreativ</h1>
+        <h1><span class="serif">Technologist.</span></h1>
+
+        <div class="hero-sub">
+            Specializing in Artificial Intelligence, Machine LearningBlockchain Architectures, and High-Performance Web
+            Systems.
+        </div>
+    </section>
+
+    <div class="main-content">
+
+        <div class="bento-wrapper">
+            <div class="section-title">Technical Arsenal</div>
+            <div class="bento-grid">
+
+                <!-- AI/ML - 2x1 -->
+                <div class="bento-item col-span-2 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-brain"></i> AI & Machine Learning</div>
+                    <div class="bento-title">SciKit-Learn, BERT <br>& LangChain, Pandas, Numpy</div>
+                </div>
+
+                <!-- Full Stack - 2x1 beside AI/ML -->
+                <div class="bento-item col-span-2 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-globe"></i> Full Stack Development</div>
+                    <div class="bento-title">React • Next.js<br>Node.js • Express</div>
+                </div>
+
+                <!-- Languages -->
+                <div class="bento-item col-span-1 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-code"></i> Languages</div>
+                    <div class="bento-title">Python<br>Java<br>C++</div>
+                </div>
+
+                <!-- Tools -->
+                <div class="bento-item col-span-1 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-wrench"></i> Tools</div>
+                    <div class="bento-title">Git<br>Docker<br>Postman</div>
+                </div>
+
+                <!-- Databases - 2x1 -->
+                <div class="bento-item col-span-2 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-database"></i> Databases</div>
+                    <div class="bento-title">MongoDB <br> SQL<br>Firebase</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="projects-wrapper">
+            <div class="section-title">Projects</div>
+            <div class="projects-scroll-container">
+                <!-- Project 1: Readume -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="project-number">01 — AI Platform</div>
+                            <div class="project-title">Readume</div>
+                        </div>
+                        <a href="https://github.com/rushxbh/Readume" target="_blank" class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop"
+                                alt="Readume">
+                            <div class="project-link-icon"><i class="ph ph-arrow-up-right"></i></div>
+                            <div class="project-bento-content">
+                                <div class="bento-title ">Readume</div>
+                                <p class="project-bento-desc">Robust resume parser using Tesseract OCR and fine-tuned
+                                    BERT. Integrated LangChain chatbot.</p>
+                                <div class="tag-container">
+                                    <span class="pill">Python</span>
+                                    <span class="pill">Django</span>
+                                    <span class="pill">BERT</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2: AcreVAULT -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="project-number">02 — DApp</div>
+                            <div class="project-title">AcreVAULT</div>
+                        </div>
+                        <a href="https://github.com/rushabhjain" target="_blank" class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=800&auto=format&fit=crop"
+                                alt="AcreVAULT">
+                            <div class="project-link-icon"><i class="ph ph-arrow-up-right"></i></div>
+                            <div class="project-bento-content">
+                                <div class="bento-title">AcreVAULT</div>
+                                <p class="project-bento-desc">Decentralized land registry on Ethereum. GIS mapping and
+                                    anomaly detection for fraud prevention.</p>
+                                <div class="tag-container">
+                                    <span class="pill">Solidity</span>
+                                    <span class="pill">Ethereum</span>
+                                    <span class="pill">GIS</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3: Waste Food -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="project-number">03 — Supply Chain</div>
+                            <div class="project-title">Waste Food</div>
+                        </div>
+                        <a href="https://github.com/rushxbh" target="_blank" class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop"
+                                alt="Waste Food">
+                            <div class="project-link-icon"><i class="ph ph-arrow-up-right"></i></div>
+                            <div class="project-bento-content">
+                                <div class="bento-title">Waste Food</div>
+                                <p class="project-bento-desc">Platform matching surplus food to shelters. AI demand
+                                    forecasting and Power BI dashboards.</p>
+                                <div class="tag-container">
+                                    <span class="pill">Python</span>
+                                    <span class="pill">Power BI</span>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- Project 4: Doodler -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="project-number">04 — Extension</div>
+                            <div class="project-title">Doodler</div>
+                        </div>
+                        <a href="https://github.com/rushxbh/Doodler" target="_blank" class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=800&auto=format&fit=crop"
+                                alt="Doodler">
+                            <div class="project-link-icon"><i class="ph ph-arrow-up-right"></i></div>
+                            <div class="project-bento-content">
+                                <div class="bento-title">Doodler</div>
+                                <p class="project-bento-desc">Annotate any website. Draw, highlight, and share.
+                                    Real-time collaboration (WIP).</p>
+                                <div class="tag-container">
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">Chrome API</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 5: TrustChain -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="project-number">05 — Blockchain + ML</div>
+                            <div class="project-title">TrustChain</div>
+                        </div>
+                        <a href="https://github.com/rushxbh" target="_blank" class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop"
+                                alt="TrustChain">
+                            <div class="project-link-icon"><i class="ph ph-arrow-up-right"></i></div>
+                            <div class="project-bento-content">
+                                <div class="bento-title">TrustChain</div>
+                                <p class="project-bento-desc">Blockchain tender auctions with anonymous bidding. ML
+                                    ranking for contractor risk assessment using history, fraud detection & completion
+                                    metrics.</p>
+                                <div class="tag-container">
+                                    <span class="pill">Solidity</span>
+                                    <span class="pill">ML</span>
+                                    <span class="pill">Python</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 6: CyberChain -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="project-number">06 — Cybersecurity</div>
+                            <div class="project-title">DistGuard</div>
+                        </div>
+                        <a href="https://github.com/rushxbh" target="_blank" class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop"
+                                alt="CyberChain">
+                            <div class="project-link-icon"><i class="ph ph-arrow-up-right"></i></div>
+                            <div class="project-bento-content">
+                                <div class="bento-title">DistGuard</div>
+                                <p class="project-bento-desc">Blockchain + ML security. Servers as nodes—hacking one
+                                    requires the entire chain. XGBoost & Isolation Forest.</p>
+                                <div class="tag-container">
+                                    <span class="pill">Go</span>
+                                    <span class="pill">XGBoost</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 7: Tidey -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="project-number">07 — Environment</div>
+                            <div class="project-title">Tidey</div>
+                        </div>
+                        <a href="https://github.com/rushxbh" target="_blank" class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop"
+                                alt="Tidey">
+                            <div class="project-link-icon"><i class="ph ph-arrow-up-right"></i></div>
+                            <div class="project-bento-content">
+                                <div class="bento-title">Tidey</div>
+                                <p class="project-bento-desc">Beach cleanup with QR attendance, ML beach scoring, event
+                                    scheduling & gamified achievements.</p>
+                                <div class="tag-container">
+                                    <span class="pill">React</span>
+                                    <span class="pill">ML</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="bento-wrapper">
+            <div class="section-title">Profile & Recognition</div>
+            <div class="bento-grid">
+
+                <div class="bento-item col-span-2 row-span-2 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-graduation-cap"></i> Education</div>
+                    <div class="year-display">2026
+                    </div>
+                    <div class="bento-title">BTech
+                        Information Technology</div>
+                    <div class="bento-sub">Vivekanand Education Society's Institute of Technology (VESIT)</div>
+                    <div class="edu-info">CGPI: 8.485 (Aug 2022 - Present)</div>
+                </div>
+
+                <div class="bento-item col-span-2 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-trophy"></i> Winner</div>
+                    <div class="bento-title">Invictus '25 Hackathon</div>
+                    <div class="bento-sub">ISTE VESIT</div>
+                </div>
+
+                <div class="bento-item col-span-1 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-medal"></i> Finalist</div>
+                    <div class="bento-title">VES-HACK-IT</div>
+                    <div class="bento-sub">2025</div>
+                </div>
+
+                <div class="bento-item col-span-1 bento-gradient">
+                    <div class="bento-header"><i class="ph ph-users"></i> Leadership</div>
+                    <div class="bento-title">Senior Photographer n Editor</div>
+                    <div class="bento-sub">VESIT Photocircle</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 Rushabh Jain
+        </div>
+    </div>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  // 1. LENIS SMOOTH SCROLL
+  try {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      smooth: true,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  } catch (e) {
+    console.warn('Lenis failed:', e);
+  }
+
+  // 2. INFINITE HORIZONTAL SCROLL
+  const scrollContainer = document.querySelector('.projects-scroll-container');
+  if (scrollContainer) {
+    const cards = scrollContainer.innerHTML;
+    scrollContainer.innerHTML = cards + cards + cards;
+
+    requestAnimationFrame(() => {
+      const oneSetWidth = scrollContainer.scrollWidth / 3;
+      scrollContainer.scrollLeft = oneSetWidth;
+
+      let isScrolling = false;
+
+      scrollContainer.addEventListener('scroll', () => {
+        if (isScrolling) return;
+
+        const pos = scrollContainer.scrollLeft;
+
+        if (pos >= oneSetWidth * 2) {
+          isScrolling = true;
+          scrollContainer.style.scrollBehavior = 'auto';
+          scrollContainer.scrollLeft = pos - oneSetWidth;
+          scrollContainer.style.scrollBehavior = 'smooth';
+          setTimeout(() => isScrolling = false, 50);
+        } 
+        else if (pos <= 0) {
+          isScrolling = true;
+          scrollContainer.style.scrollBehavior = 'auto';
+          scrollContainer.scrollLeft = pos + oneSetWidth;
+          scrollContainer.style.scrollBehavior = 'smooth';
+          setTimeout(() => isScrolling = false, 50);
+        }
+      });
+    });
+  }
+
+  // 3. THEME TOGGLE
+  const themeBtn = document.getElementById('themeBtn');
+  const themeIcon = document.getElementById('themeIcon');
+  const html = document.documentElement;
+
+  let currentTheme = localStorage.getItem('theme') || 'light';
+  html.setAttribute('data-theme', currentTheme);
+
+  if (currentTheme === 'dark') {
+    themeIcon.classList.replace('ph-moon', 'ph-sun');
+  }
+
+  themeBtn.addEventListener('click', () => {
+    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+    html.setAttribute('data-theme', currentTheme);
+    localStorage.setItem('theme', currentTheme);
+
+    themeIcon.classList.replace(
+      currentTheme === 'dark' ? 'ph-moon' : 'ph-sun',
+      currentTheme === 'dark' ? 'ph-sun' : 'ph-moon'
+    );
+
+    gsap.fromTo(
+      themeIcon,
+      { rotation: -90, scale: 0 },
+      { rotation: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
+    );
+  });
+
+  // 4. GSAP
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from("h1", {
+    y: 100,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.2,
+    ease: "power4.out"
+  });
+
+  gsap.utils.toArray('.bento-item').forEach(item => {
+    gsap.from(item, {
+      scrollTrigger: {
+        trigger: item,
+        start: "top 85%"
+      },
+      y: 50,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power2.out"
+    });
+  });
+
+});
+</script>
+
+</body>
+
+</html>
