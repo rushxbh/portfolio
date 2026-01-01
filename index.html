@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -918,116 +918,130 @@
     </div>
 
     <script>
-document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", () => {
 
-  // 1. LENIS SMOOTH SCROLL
-  try {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      smooth: true,
-    });
+            // 1. LENIS SMOOTH SCROLL
+            try {
+                const lenis = new Lenis({
+                    duration: 1.2,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    direction: 'vertical',
+                    smooth: true,
+                });
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-  } catch (e) {
-    console.warn('Lenis failed:', e);
-  }
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            } catch (e) {
+                console.warn('Lenis failed:', e);
+            }
 
-  // 2. INFINITE HORIZONTAL SCROLL
-  const scrollContainer = document.querySelector('.projects-scroll-container');
-  if (scrollContainer) {
-    const cards = scrollContainer.innerHTML;
-    scrollContainer.innerHTML = cards + cards + cards;
+            // 2. INFINITE HORIZONTAL SCROLL
+            const scrollContainer = document.querySelector('.projects-scroll-container');
+            if (scrollContainer) {
+                const cards = scrollContainer.innerHTML;
+                scrollContainer.innerHTML = cards + cards + cards;
 
-    requestAnimationFrame(() => {
-      const oneSetWidth = scrollContainer.scrollWidth / 3;
-      scrollContainer.scrollLeft = oneSetWidth;
+                requestAnimationFrame(() => {
+                    const oneSetWidth = scrollContainer.scrollWidth / 3;
+                    scrollContainer.scrollLeft = oneSetWidth;
 
-      let isScrolling = false;
+                    let isScrolling = false;
 
-      scrollContainer.addEventListener('scroll', () => {
-        if (isScrolling) return;
+                    scrollContainer.addEventListener('scroll', () => {
+                        if (isScrolling) return;
 
-        const pos = scrollContainer.scrollLeft;
+                        const pos = scrollContainer.scrollLeft;
 
-        if (pos >= oneSetWidth * 2) {
-          isScrolling = true;
-          scrollContainer.style.scrollBehavior = 'auto';
-          scrollContainer.scrollLeft = pos - oneSetWidth;
-          scrollContainer.style.scrollBehavior = 'smooth';
-          setTimeout(() => isScrolling = false, 50);
-        } 
-        else if (pos <= 0) {
-          isScrolling = true;
-          scrollContainer.style.scrollBehavior = 'auto';
-          scrollContainer.scrollLeft = pos + oneSetWidth;
-          scrollContainer.style.scrollBehavior = 'smooth';
-          setTimeout(() => isScrolling = false, 50);
-        }
-      });
-    });
-  }
+                        if (pos >= oneSetWidth * 2) {
+                            isScrolling = true;
+                            scrollContainer.style.scrollBehavior = 'auto';
+                            scrollContainer.scrollLeft = pos - oneSetWidth;
+                            scrollContainer.style.scrollBehavior = 'smooth';
+                            setTimeout(() => isScrolling = false, 50);
+                        }
+                        else if (pos <= 0) {
+                            isScrolling = true;
+                            scrollContainer.style.scrollBehavior = 'auto';
+                            scrollContainer.scrollLeft = pos + oneSetWidth;
+                            scrollContainer.style.scrollBehavior = 'smooth';
+                            setTimeout(() => isScrolling = false, 50);
+                        }
+                    });
+                });
+            }
 
-  // 3. THEME TOGGLE
-  const themeBtn = document.getElementById('themeBtn');
-  const themeIcon = document.getElementById('themeIcon');
-  const html = document.documentElement;
+            // 3. THEME TOGGLE
+            const themeBtn = document.getElementById('themeBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const html = document.documentElement;
 
-  let currentTheme = localStorage.getItem('theme') || 'light';
-  html.setAttribute('data-theme', currentTheme);
+            let currentTheme = localStorage.getItem('theme') || 'dark';
+            html.setAttribute('data-theme', currentTheme);
 
-  if (currentTheme === 'dark') {
-    themeIcon.classList.replace('ph-moon', 'ph-sun');
-  }
+            if (themeIcon) {
+                if (currentTheme === 'dark') {
+                    themeIcon.classList.remove('ph-moon');
+                    themeIcon.classList.add('ph-sun');
+                } else {
+                    themeIcon.classList.remove('ph-sun');
+                    themeIcon.classList.add('ph-moon');
+                }
+            }
 
-  themeBtn.addEventListener('click', () => {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    html.setAttribute('data-theme', currentTheme);
-    localStorage.setItem('theme', currentTheme);
+            if (themeBtn) {
+                themeBtn.addEventListener('click', () => {
+                    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    html.setAttribute('data-theme', currentTheme);
+                    localStorage.setItem('theme', currentTheme);
 
-    themeIcon.classList.replace(
-      currentTheme === 'dark' ? 'ph-moon' : 'ph-sun',
-      currentTheme === 'dark' ? 'ph-sun' : 'ph-moon'
-    );
+                    if (themeIcon) {
+                        if (currentTheme === 'dark') {
+                            themeIcon.classList.remove('ph-moon');
+                            themeIcon.classList.add('ph-sun');
+                        } else {
+                            themeIcon.classList.remove('ph-sun');
+                            themeIcon.classList.add('ph-moon');
+                        }
 
-    gsap.fromTo(
-      themeIcon,
-      { rotation: -90, scale: 0 },
-      { rotation: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
-    );
-  });
+                        gsap.fromTo(
+                            themeIcon,
+                            { rotation: -90, scale: 0 },
+                            { rotation: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
+                        );
+                    }
+                });
+            }
 
-  // 4. GSAP
-  gsap.registerPlugin(ScrollTrigger);
+            // 4. GSAP
+            gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from("h1", {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.2,
-    ease: "power4.out"
-  });
+            gsap.from("h1", {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.2,
+                ease: "power4.out"
+            });
 
-  gsap.utils.toArray('.bento-item').forEach(item => {
-    gsap.from(item, {
-      scrollTrigger: {
-        trigger: item,
-        start: "top 85%"
-      },
-      y: 50,
-      opacity: 0,
-      duration: 0.6,
-      ease: "power2.out"
-    });
-  });
+            gsap.utils.toArray('.bento-item').forEach(item => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 85%"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: "power2.out"
+                });
+            });
 
-});
-</script>
+        });
+    </script>
+
 
 </body>
 
