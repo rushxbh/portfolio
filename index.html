@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -26,7 +26,7 @@
             --accent: #ff4d00;
             --card-bg: #ffffff;
             --border: rgba(0, 0, 0, 0.08);
-            --grid-color: rgba(0, 0, 0, 0.04);
+            --grid-color: rgba(0, 0, 0, 0.185);
             --nav-glass: rgba(255, 255, 255, 0.8);
             --pill-bg: rgba(0, 0, 0, 0.05);
             --serif-color: #ff4d00;
@@ -40,7 +40,7 @@
             --accent: #00f0ff;
             --card-bg: #121212;
             --border: rgba(255, 255, 255, 0.12);
-            --grid-color: rgba(255, 255, 255, 0.05);
+            --grid-color: #414141;
             --nav-glass: rgba(5, 5, 5, 0.8);
             --pill-bg: rgba(255, 255, 255, 0.1);
             --serif-color: #00f0ff;
@@ -242,7 +242,7 @@
 
         .bento-item {
             background: var(--card-bg);
-
+            border: 1px solid rgba(0, 0, 0, 0.08);
             border-radius: 0px;
             padding: 2rem;
             display: flex;
@@ -250,6 +250,11 @@
             justify-content: space-between;
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.4s, border-color 0.4s;
             color: var(--text);
+        }
+
+        /* Remove border in dark mode */
+        html[data-theme="dark"] .bento-item {
+            border-color: transparent;
         }
 
         .bento-item:hover {
@@ -628,6 +633,339 @@
                 padding: 2rem;
             }
         }
+
+        /* Tablet Styles */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 5vw;
+            }
+
+            .logo {
+                font-size: 0.95rem;
+            }
+
+            .contact-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .contact-btn span {
+                display: none;
+            }
+
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero {
+                padding: 0 5vw;
+                padding-top: 80px;
+            }
+
+            h1 {
+                font-size: 13vw;
+                line-height: 0.9;
+            }
+
+            .hero-sub {
+                font-size: 1rem;
+                margin-top: 1.5rem;
+                max-width: 100%;
+            }
+
+            .bento-wrapper {
+                padding: 4vh 5vw;
+            }
+
+            .bento-grid {
+                gap: 1rem;
+            }
+
+            .bento-item {
+                padding: 1.5rem;
+            }
+
+            .bento-title {
+                font-size: 1.5rem;
+            }
+
+            .projects-wrapper {
+                padding: 6vh 0;
+            }
+
+            .projects-wrapper::before,
+            .projects-wrapper::after {
+                width: 60px;
+            }
+
+            .flip-card {
+                width: 300px;
+                height: 360px;
+            }
+
+            .flip-card-front .project-title {
+                font-size: 1.8rem;
+            }
+
+            .year-display {
+                font-size: 2.8rem;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 4vw;
+            }
+
+            .logo {
+                font-size: 0.85rem;
+                letter-spacing: -0.3px;
+            }
+
+            .nav-right {
+                gap: 0.6rem;
+            }
+
+            .contact-btn {
+                padding: 0.45rem 0.8rem;
+                font-size: 0.75rem;
+                gap: 0.3rem;
+            }
+
+            .contact-btn i {
+                font-size: 0.9rem;
+            }
+
+            .theme-toggle {
+                width: 36px;
+                height: 36px;
+            }
+
+            .theme-toggle i {
+                font-size: 1rem;
+            }
+
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding: 100px 5vw 60px;
+                justify-content: flex-start;
+            }
+
+            .bento-header {
+                font-size: 0.7rem;
+                margin-bottom: 1.5rem;
+            }
+
+            h1 {
+                font-size: 15vw;
+                line-height: 0.95;
+                letter-spacing: -0.03em;
+            }
+
+            .hero-sub {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-top: 1.5rem;
+                opacity: 0.7;
+            }
+
+            .section-title {
+                font-size: 0.75rem;
+                margin-bottom: 1.5rem;
+                letter-spacing: 1.5px;
+            }
+
+            .bento-wrapper {
+                padding: 5vh 4vw;
+            }
+
+            .bento-grid {
+                gap: 0.8rem;
+                grid-auto-rows: minmax(140px, auto);
+            }
+
+            .bento-item {
+                padding: 1.25rem;
+                border-radius: 0;
+            }
+
+            .bento-header {
+                font-size: 0.7rem;
+                margin-bottom: 0.75rem;
+                gap: 6px;
+            }
+
+            .bento-header i {
+                font-size: 0.9rem;
+            }
+
+            .bento-title {
+                font-size: 1.3rem;
+                letter-spacing: -0.01em;
+            }
+
+            .bento-title-1 {
+                font-size: 1.3rem;
+            }
+
+            .bento-sub {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+
+            .tag-container {
+                gap: 6px;
+                padding-top: 0.75rem;
+            }
+
+            .pill {
+                font-size: 0.65rem;
+                padding: 5px 10px;
+            }
+
+            .projects-wrapper {
+                padding: 5vh 0;
+            }
+
+            .projects-wrapper .section-title {
+                padding: 0 5vw;
+                margin-bottom: 1.5rem;
+            }
+
+            .projects-wrapper::before,
+            .projects-wrapper::after {
+                width: 30px;
+                backdrop-filter: blur(6px);
+            }
+
+            .projects-scroll-container {
+                padding: 0 5vw 1rem;
+                gap: 1rem;
+            }
+
+            .flip-card {
+                width: 280px;
+                height: 340px;
+            }
+
+            .flip-card-front {
+                padding: 1.5rem;
+            }
+
+            .flip-card-front .project-number {
+                font-size: 0.7rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .flip-card-front .project-title {
+                font-size: 1.6rem;
+            }
+
+            .flip-card-back .project-bento-content {
+                padding: 1.25rem;
+            }
+
+            .flip-card-back .bento-title {
+                font-size: 1.2rem;
+            }
+
+            .flip-card-back .project-bento-desc {
+                font-size: 0.8rem;
+                line-height: 1.4;
+                margin: 0.5rem 0;
+            }
+
+            .flip-card-back .project-link-icon {
+                width: 34px;
+                height: 34px;
+            }
+
+            .year-display {
+                font-size: 2.5rem;
+            }
+
+            .edu-info {
+                font-size: 0.8rem;
+            }
+
+            .row-span-2 {
+                grid-row: span 1;
+            }
+
+            .github-btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            .footer {
+                height: 15vh;
+                font-size: 0.7rem;
+            }
+
+            /* Improve touch interactions on mobile */
+            .flip-card:active .flip-card-inner {
+                transform: rotateY(180deg);
+            }
+
+            .bento-item:active {
+                transform: scale(0.98);
+            }
+
+            .contact-btn:active,
+            .theme-toggle:active {
+                transform: scale(0.95);
+            }
+        }
+
+        /* Extra small screens */
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 17vw;
+            }
+
+            .logo {
+                font-size: 0.75rem;
+            }
+
+            .contact-btn {
+                padding: 0.4rem 0.6rem;
+            }
+
+            .theme-toggle {
+                width: 32px;
+                height: 32px;
+            }
+
+            .flip-card {
+                width: 250px;
+                height: 320px;
+            }
+
+            .bento-title {
+                font-size: 1.15rem;
+            }
+        }
+
+        /* Landscape mode on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                height: auto;
+                min-height: 100vh;
+                padding-top: 80px;
+                padding-bottom: 40px;
+            }
+
+            h1 {
+                font-size: 10vw;
+            }
+
+            .hero-sub {
+                margin-top: 1rem;
+            }
+        }
     </style>
 </head>
 
@@ -978,42 +1316,29 @@
             const themeIcon = document.getElementById('themeIcon');
             const html = document.documentElement;
 
-            let currentTheme = localStorage.getItem('theme') || 'dark';
+            let currentTheme = localStorage.getItem('theme') || 'light';
             html.setAttribute('data-theme', currentTheme);
 
-            if (themeIcon) {
-                if (currentTheme === 'dark') {
-                    themeIcon.classList.remove('ph-moon');
-                    themeIcon.classList.add('ph-sun');
-                } else {
-                    themeIcon.classList.remove('ph-sun');
-                    themeIcon.classList.add('ph-moon');
-                }
+            if (currentTheme === 'dark') {
+                themeIcon.classList.replace('ph-moon', 'ph-sun');
             }
 
-            if (themeBtn) {
-                themeBtn.addEventListener('click', () => {
-                    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-                    html.setAttribute('data-theme', currentTheme);
-                    localStorage.setItem('theme', currentTheme);
+            themeBtn.addEventListener('click', () => {
+                currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                html.setAttribute('data-theme', currentTheme);
+                localStorage.setItem('theme', currentTheme);
 
-                    if (themeIcon) {
-                        if (currentTheme === 'dark') {
-                            themeIcon.classList.remove('ph-moon');
-                            themeIcon.classList.add('ph-sun');
-                        } else {
-                            themeIcon.classList.remove('ph-sun');
-                            themeIcon.classList.add('ph-moon');
-                        }
+                themeIcon.classList.replace(
+                    currentTheme === 'dark' ? 'ph-moon' : 'ph-sun',
+                    currentTheme === 'dark' ? 'ph-sun' : 'ph-moon'
+                );
 
-                        gsap.fromTo(
-                            themeIcon,
-                            { rotation: -90, scale: 0 },
-                            { rotation: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
-                        );
-                    }
-                });
-            }
+                gsap.fromTo(
+                    themeIcon,
+                    { rotation: -90, scale: 0 },
+                    { rotation: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
+                );
+            });
 
             // 4. GSAP
             gsap.registerPlugin(ScrollTrigger);
@@ -1041,7 +1366,6 @@
 
         });
     </script>
-
 
 </body>
 
